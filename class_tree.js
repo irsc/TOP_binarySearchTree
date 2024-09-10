@@ -15,6 +15,141 @@ class Tree{
 
         return node;
     }
+
+    insert(value){
+        let node = this.root;
+
+        if(this.find(value)){
+            return null
+        }else{
+            while(node.left != null && node.right != null){
+                if(value < node.data){
+                    node = node.left;
+                }else{
+                    node = node.right;
+                }
+            }
+            
+            if(value < node.data){
+                node.left = new Node(value);
+            }else{
+                node.right = new Node(value);
+            }
+        }
+    }
+
+    deleteItem(value){
+
+        let node = this.find(value);
+        let nodeParent;
+        if(node == null){
+            return null;
+        }else{
+            nodeParent = this.findParent(value);
+        }
+
+        if(node.left == null && node.right == null){
+            if(nodeParent.left == node){
+                nodeParent.left = null;
+            }else{
+                nodeParent.right = null;
+            }
+            console.log("Leaf node deleted");
+        } else if(node.left == null && node.right != null){
+            node.data = node.right.data;
+            node.left = null;
+            node.right = node.right.right;
+        } else if(node.left != null && node.right == null){
+            node.data = node.left.data;
+            node.left = node.left.left;
+            node.right = null;
+        }else{
+            let nextBiggestNode = node.right;
+
+            while(nextBiggestNode.left != null){
+                nextBiggestNode = nextBiggestNode.left;
+            }
+            let tempNodeData = nextBiggestNode.data;
+            console.log("next biggest found " +nextBiggestNode.data +" , now delete exchanged node");
+            this.deleteItem(nextBiggestNode.data);
+            node.data = tempNodeData;
+        }
+
+    }
+
+    find(value){
+        let node = this.root;
+        while(node != null){
+            if(node.data == value){
+                return node;
+            }
+            if(value < node.data && node.left != null){
+                node = node.left;
+            }else if(value > node.data && node.right != null){
+                node = node.right;
+            }else{
+                node = null;
+            }
+        }
+        return node;
+    }
+
+    findParent(value){
+        let node = this.root;
+        if(value == node.data){
+            return node;
+        }
+        while(node != null){
+            if(node.left.data == value || node.right.data == value){
+                console.log("Parent node found " + node.data);
+                return node;
+            }
+            if(value < node.data && node.left != null){
+                node = node.left;
+            }else if(value > node.data && node.right != null){
+                node = node.right;
+            }
+        }
+        return node;
+    }
+
+    levelOrder(callback){
+
+    }
+
+    inOrder(callback){
+
+    }
+
+    preOrder(callback){
+
+    }
+
+    postOrder(callback){
+
+    }
+    // Returns the given node’s height. Height is defined as the number of edges 
+    //in the longest path from a given node to a leaf node.
+    height(node){
+
+    }
+
+    // Returns the given node’s depth. Depth is defined as the number of edges
+    // in the path from a given node to the tree’s root node.
+    depth(node){
+
+    }
+
+    // Function that checks if the tree is balanced. 
+    //A balanced tree is one where the difference between heights of the left subtree and 
+    //the right subtree of every node is not more than 1.
+    isBalanced(){
+
+    }
+
+    rebalance(){
+
+    }
 }
 
 function mergeSort(array){

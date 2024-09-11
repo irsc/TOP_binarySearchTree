@@ -115,6 +115,19 @@ class Tree{
 
     levelOrder(callback){
 
+        if(callback == undefined){
+            throw new Error('A callback function is required');
+        }
+        let levelArray = [];
+        let node = this.root;
+        levelArray.push(node);
+
+        while(levelArray.length > 0){
+            node = levelArray.shift();
+            if(node.left != null) levelArray.push(node.left);
+            if(node.right != null) levelArray.push(node.right);
+            callback(node); 
+        }
     }
 
     inOrder(callback){

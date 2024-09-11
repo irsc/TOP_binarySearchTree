@@ -118,7 +118,7 @@ class Tree{
         if(callback == undefined){
             throw new Error('A callback function is required');
         }
-        let levelArray = [];
+        let levelArray = []; //array stacking nodes
         let node = this.root;
         levelArray.push(node);
 
@@ -131,15 +131,48 @@ class Tree{
     }
 
     inOrder(callback){
+        if(callback == undefined){
+            throw new Error('A callback function is required');
+        }
 
+        let inOrderNode = function(node){
+            if(node == null) return;
+            inOrderNode(node.left);
+            callback(node);
+            inOrderNode(node.right);
+        }
+        inOrderNode(this.root);
     }
 
     preOrder(callback){
+        if(callback == undefined){
+            throw new Error('A callback function is required');
+        }
 
+        let levelArray = []; //array stacking nodes
+        let node = this.root;
+        levelArray.push(node);
+
+        while(levelArray.length > 0){
+            node = levelArray.shift();
+            if(node.right != null) levelArray.unshift(node.right);
+            if(node.left != null) levelArray.unshift(node.left);
+            callback(node); 
+        }
     }
 
     postOrder(callback){
+        if(callback == undefined){
+            throw new Error('A callback function is required');
+        }
 
+        let postOrderNode = function(node){
+            if(node == null) return;
+            postOrderNode(node.left);
+            postOrderNode(node.right);
+            callback(node);
+        }
+        postOrderNode(this.root);
     }
     // Returns the given node’s height. Height is defined as the number of edges 
     //in the longest path from a given node to a leaf node.

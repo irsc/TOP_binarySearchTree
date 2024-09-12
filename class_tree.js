@@ -177,19 +177,43 @@ class Tree{
     // Returns the given node’s height. Height is defined as the number of edges 
     //in the longest path from a given node to a leaf node.
     height(node){
+        if(node == null)  return -1;
 
+        return Math.max(this.height(node.left), this.height(node.right)) + 1;
     }
 
     // Returns the given node’s depth. Depth is defined as the number of edges
     // in the path from a given node to the tree’s root node.
     depth(node){
+        if(node == null) throw new Error('Enter a node that exists in the tree');
+        if(node == this.root) return 0;
 
+        let counter = 1;
+        let parentNode = this.findParent(node.data);
+        while(parentNode != this.root){
+            parentNode = this.findParent(parentNode.data);
+            counter++;
+        }
+        return counter;
     }
 
     // Function that checks if the tree is balanced. 
     //A balanced tree is one where the difference between heights of the left subtree and 
     //the right subtree of every node is not more than 1.
     isBalanced(){
+
+        return this.heightDiff(this.root);
+
+    }
+
+    heightDiff(node){
+        if(node == null)  return true;
+        let difference = Math.abs(this.height(node.left) - this.height(node.right));
+        if(difference > 1){
+            return false;
+        }else{
+            return this.heightDiff(node.left) && this.heightDiff(node.right);
+        }
 
     }
 

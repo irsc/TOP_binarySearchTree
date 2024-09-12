@@ -1,4 +1,4 @@
-
+//Class Tree
 class Tree{
     constructor(array){
         this.root = this.buildTree(mergeSort(removeDuplicates(array)));
@@ -178,7 +178,6 @@ class Tree{
     //in the longest path from a given node to a leaf node.
     height(node){
         if(node == null)  return -1;
-
         return Math.max(this.height(node.left), this.height(node.right)) + 1;
     }
 
@@ -201,9 +200,7 @@ class Tree{
     //A balanced tree is one where the difference between heights of the left subtree and 
     //the right subtree of every node is not more than 1.
     isBalanced(){
-
         return this.heightDiff(this.root);
-
     }
 
     heightDiff(node){
@@ -214,14 +211,20 @@ class Tree{
         }else{
             return this.heightDiff(node.left) && this.heightDiff(node.right);
         }
-
     }
-
+    // Function that rebalances an unbalanced tree. 
+    //Tip: You’ll want to use a traversal method to provide a new array to the buildTree function.
     rebalance(){
+        let arrayTree = [];
+        this.inOrder((node)=>{
+            arrayTree.push(node.data);
+        });
+        this.root = this.buildTree(mergeSort(removeDuplicates(arrayTree)));
 
     }
-}
+} // end of class Tree
 
+// ancilliary functions
 function mergeSort(array){
     let sortedArray = [];
     if(array.length == 1) return array;
